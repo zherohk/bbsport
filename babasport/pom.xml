@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zhero.babasport</groupId>
+  <artifactId>babasport</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>babasport-common</module>
+  	<module>babasport-pojo</module>
+  	<module>babasport-interface</module>
+  	<module>babasport-dao</module>
+  	<module>babasport-service-product</module>
+  	<module>babasport-service-solr</module>
+  	<module>babasport-service-buyer</module>
+  	<module>babasport-service-cms</module>
+  	<module>babasport-console</module>
+  	<module>babasport-portal</module>
+  	<module>babasport-login</module>
+  </modules>
+</project>
