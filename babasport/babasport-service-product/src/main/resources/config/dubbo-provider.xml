@@ -31,4 +31,5 @@
 	<dubbo:protocol name="dubbo" port="20880"/>
 	<!-- 配置暴露的服务 -->
 	<dubbo:service ref="bbsTestService" interface="com.zhero.babasport.service.test.BbsTestService"/>
+	<dubbo:service ref="brandService" interface="com.zhero.babasport.service.brand.BrandService"/>
 </beans>

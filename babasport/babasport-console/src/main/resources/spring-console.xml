@@ -24,7 +24,17 @@
 	<context:component-scan base-package="com.zhero.babasport.controller"/>
 	<!-- 配置三大组件 -->
 	<!-- 加载类型转换器,json解析器,校验器 -->
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	
+	<!-- 自定义类型转换器 -->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.zhero.babasport.utils.converter.CustomParamsConverter"/>
+			</set>
+		</property>
+	</bean>
+	
 	<!-- 视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/console/"/>
