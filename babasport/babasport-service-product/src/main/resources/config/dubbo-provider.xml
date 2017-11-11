@@ -24,7 +24,7 @@
 	<!-- dubbo服务名称 -->
 	<dubbo:application name="service-product"/>
 	<!-- 配置dubbo的注册中心 -->
-	<!-- <dubbo:registry protocol="zookeeper" address="192.168.137.168:2181"/> -->
+	<!-- <dubbo:registry protocol="zookeeper" address="192.168.200.168:2181"/> -->
 	<!-- 直连 -->
 	<dubbo:registry address="N/A"/>
 	<!-- 配置dubbo协议 -->
@@ -32,4 +32,6 @@
 	<!-- 配置暴露的服务 -->
 	<dubbo:service ref="bbsTestService" interface="com.zhero.babasport.service.test.BbsTestService"/>
 	<dubbo:service ref="brandService" interface="com.zhero.babasport.service.brand.BrandService"/>
+	<dubbo:service ref="uploadService" interface="com.zhero.babasport.service.upload.UploadService"/>
+	
 </beans>

@@ -1,4 +1,4 @@
-package com.zhero.babasport.pojo.product;
+package com.zhero.babasport.pojo.page;
 
 import java.util.ArrayList;
 import java.util.List;

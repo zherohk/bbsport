@@ -1,4 +1,4 @@
-package com.zhero.babasport.pojo.product;
+package com.zhero.babasport.pojo.page;
 
 /**
  * 简单分页类

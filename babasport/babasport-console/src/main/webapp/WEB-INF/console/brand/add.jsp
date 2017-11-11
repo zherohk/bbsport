@@ -4,6 +4,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>babasport-add</title>
+<script type="text/javascript">
+	function uploadPic() {
+		var opts = {
+				url:'/upload/uploadPic.do',
+				type:'post',
+				dataType:"json",
+				success:function(data){
+					//图片回显
+					$("#allUrl").attr("src",data.allUrl);
+					//图片的url地址
+					$("#imgUrl").val(data.imgUrl);
+				}
+		};
+		//使用jQuery.form.js构建form表单并且进行异步提交
+		$("#jvForm").ajaxSubmit(opts);
+	}
+</script>
 </head>
 <body>
 <div class="box-positon">
@@ -14,7 +31,7 @@
 	<div class="clear"></div>
 </div>
 <div class="body-box" style="float:right">
-	<form id="jvForm" action="add.do" method="post" enctype="multipart/form-data">
+	<form id="jvForm" action="save.do" method="post" enctype="multipart/form-data">
 		<table cellspacing="1" cellpadding="2" width="100%" border="0" class="pn-ftable">
 			<tbody>
 				<tr>
@@ -35,8 +52,9 @@
 				<tr>
 					<td width="20%" class="pn-flabel pn-flabel-h"></td>
 						<td width="80%" class="pn-fcontent">
-						<img width="100" height="100" id="allUrl"/>
-						<input type="file" />
+						<img width="100" height="100" id="allUrl" src="${brand.allUrl }"/>
+						<input type="hidden" name="imgUrl" id="imgUrl"/>
+						<input type="file" name="pic" onchange="uploadPic()"/>
 					</td>
 				</tr>
 				<tr>

@@ -24,7 +24,7 @@
 	<!-- dubbo服务名称 -->
 	<dubbo:application name="console"/>
 	<!-- 配置dubbo的注册中心 -->
-	<!-- <dubbo:registry protocol="zookeeper" address="192.168.137.168:2181"/> -->
+	<!-- <dubbo:registry protocol="zookeeper" address="192.168.200.168:2181"/> -->
 	<!-- 直连 -->
 	<dubbo:registry address="N/A"/>
 	
@@ -33,6 +33,8 @@
 	<dubbo:reference id="bbsTestService" interface="com.zhero.babasport.service.test.BbsTestService"
 					url="dubbo://127.0.0.1:20880"/>
 	<dubbo:reference id="brandService" interface="com.zhero.babasport.service.brand.BrandService"
+					url="dubbo://127.0.0.1:20880"/>
+	<dubbo:reference id="uploadService" interface="com.zhero.babasport.service.upload.UploadService"
 					url="dubbo://127.0.0.1:20880"/>
 	<!-- 全局超时时间设置 -->
 	<dubbo:consumer timeout="6000000"/>

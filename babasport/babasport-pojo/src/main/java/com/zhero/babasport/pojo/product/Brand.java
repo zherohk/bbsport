@@ -1,6 +1,8 @@
 package com.zhero.babasport.pojo.product;
 
 import java.io.Serializable;
+
+import com.zhero.babasport.utils.constans.BbsConstans;
 /**
  * @description 品牌信息
  * @author zhero
@@ -17,6 +19,13 @@ public class Brand implements Serializable {
 	private Integer sort; // 排序,越大越靠前
 	private Integer isDisplay; // 是否可用,1可用,0不可
 
+	public String getAllUrl() {//附件完整路径
+		if (null != imgUrl) {
+			return BbsConstans.IMG_URL + this.imgUrl;
+		}
+		return null;
+	}
+	
 	public Long getId() {
 		return id;
 	}

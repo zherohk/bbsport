@@ -33,5 +33,41 @@ public interface BrandMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	public int selectBrandCount() throws Exception;
+	public int selectBrandCount(BrandQuery brandQuery) throws Exception;
+	
+	/**
+	 * 根据id查询品牌对象
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public Brand selectBrandById(Long id) throws Exception;
+
+	/**
+	 * 更新品牌信息
+	 * @param brand
+	 * @throws Exception
+	 */
+	public void updateBrand(Brand brand) throws Exception;
+
+	/**
+	 * 添加品牌信息
+	 * @param brand
+	 * @throws Exception
+	 */
+	public void saveBrand(Brand brand) throws Exception;
+
+	/**
+	 * 批量删除品牌信息
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void deleteBatchBrand(Long[] ids) throws Exception;
+
+	/**
+	 * 删除单个品牌
+	 * @param id
+	 * @throws Exception
+	 */
+	public void deleteById(Long id) throws Exception;
 }
