@@ -50,6 +50,17 @@ public class Product implements Serializable {
     private String imgUrl;
 
     /**
+     * 图片结果集数组,用于jsp页面图片回显
+     * @return
+     */
+    public String[] getImgUrls() {
+    	if (null != imgUrl) {
+			return imgUrl.split(",");
+		}
+    	return null;
+    }
+    
+    /**
      * 是否删除:0删除,1,没删除
      */
     private Boolean isDel;

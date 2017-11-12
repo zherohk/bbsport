@@ -36,6 +36,12 @@
 					url="dubbo://127.0.0.1:20880"/>
 	<dubbo:reference id="uploadService" interface="com.zhero.babasport.service.upload.UploadService"
 					url="dubbo://127.0.0.1:20880"/>
+	<dubbo:reference id="productService" interface="com.zhero.babasport.service.product.ProductService"
+					url="dubbo://127.0.0.1:20880"/>
+	<dubbo:reference id="colorService" interface="com.zhero.babasport.service.color.ColorService"
+					url="dubbo://127.0.0.1:20880"/>
+	<dubbo:reference id="skuService" interface="com.zhero.babasport.service.sku.SkuService"
+					url="dubbo://127.0.0.1:20880"/>
 	<!-- 全局超时时间设置 -->
 	<dubbo:consumer timeout="6000000"/>
 </beans>
