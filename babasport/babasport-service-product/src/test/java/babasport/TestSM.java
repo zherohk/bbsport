@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,6 +25,9 @@ public class TestSM {
 	@Resource
 	private BbsTestService bbsTestService;
 	
+	@Resource
+	private SolrServer solrServer;
+	
 	/**
 	 * 测试mybatis
 	 * @throws Exception 
@@ -41,5 +46,18 @@ public class TestSM {
 		bbsTest.setName("萧炎2");
 		bbsTest.setBirthday(new Date());
 		bbsTestService.insertBbsTest(bbsTest);
+	}
+	
+	/**
+	 * 测试solr
+	 * @throws Exception
+	 */
+	@Test
+	public void testSolr() throws Exception {
+		SolrInputDocument doc = new SolrInputDocument();
+		doc.setField("id", "1");
+		doc.setField("name_ik", "solr和spring整合");
+		solrServer.add(doc);
+		solrServer.commit();
 	}
 }

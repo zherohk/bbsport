@@ -90,7 +90,18 @@ public class Product implements Serializable {
      */
     private Date createTime;
 
-    private static final long serialVersionUID = 1L;
+    //jsp页面回显
+    private String price;
+    
+    public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Long getId() {
         return id;

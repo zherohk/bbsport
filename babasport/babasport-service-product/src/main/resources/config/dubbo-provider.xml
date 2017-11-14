@@ -30,11 +30,10 @@
 	<!-- 配置dubbo协议 -->
 	<dubbo:protocol name="dubbo" port="20880"/>
 	<!-- 配置暴露的服务 -->
-	<dubbo:service ref="bbsTestService" interface="com.zhero.babasport.service.test.BbsTestService"/>
+	<!-- <dubbo:service ref="bbsTestService" interface="com.zhero.babasport.service.test.BbsTestService"/> -->
 	<dubbo:service ref="brandService" interface="com.zhero.babasport.service.brand.BrandService"/>
 	<dubbo:service ref="uploadService" interface="com.zhero.babasport.service.upload.UploadService"/>
 	<dubbo:service ref="productService" interface="com.zhero.babasport.service.product.ProductService"/>
 	<dubbo:service ref="colorService" interface="com.zhero.babasport.service.color.ColorService"/>
 	<dubbo:service ref="skuService" interface="com.zhero.babasport.service.sku.SkuService"/>
-	
 </beans>

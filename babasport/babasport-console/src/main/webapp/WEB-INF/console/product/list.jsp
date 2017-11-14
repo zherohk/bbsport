@@ -6,24 +6,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>babasport-list</title>
 <script type="text/javascript">
-//上架
-function isShow(){
-	//请至少选择一个
-	var size = $("input[name='ids']:checked").size();
-	if(size == 0){
-		alert("请至少选择一个");
-		return;
+	function judge() {
+		//1.判断是否选择
+		var size = $("input[name='ids']:checked").size();
+		if (size <= 0) {
+			alert("请至少选择一个!");
+			return;
+		}
+		//2.是否删除
+		if (! confirm('您确定此操作吗?')) {
+			return;
+		}
 	}
-	//你确定删除吗
-	if(!confirm("你确定上架吗")){
-		return;
+	//上架
+	function isShow(){
+		judge();
+		//提交 Form表单
+		$("#jvForm").attr("action","/product/isShow.do");
+		$("#jvForm").attr("method","post");
+		$("#jvForm").submit();
+		
 	}
-	//提交 Form表单
-	$("#jvForm").attr("action","/brand/isShow.do");
-	$("#jvForm").attr("method","post");
-	$("#jvForm").submit();
 	
-}
+	//批量删除
+	function optDelete(name,brandId,isShow,pageNo) {
+		judge();
+		//.确定,删除所选品牌
+		var jvForm = $("#jvForm");
+		jvForm.attr("action","/product/deleteBatchProduct.do?name=" + name + "&brandId=" + brandId + "&isShow="+ isShow + "&pageNo=" + pageNo);
+		jvForm.attr("method","post").submit();
+	}
 </script>
 </head>
 <body>
@@ -101,7 +113,7 @@ function isShow(){
 		</c:forEach>
 	</span>
 </div>
-<div style="margin-top:15px;"><input class="del-button" type="button" value="删除" onclick="optDelete();"/><input class="add" type="button" value="上架" onclick="isShow();"/><input class="del-button" type="button" value="下架" onclick="isHide();"/></div>
+<div style="margin-top:15px;"><input class="del-button" type="button" value="删除" onclick="optDelete('${name}','${brandId }','${isShow }','${pageNo }');"/><input class="add" type="button" value="上架" onclick="isShow();"/><input class="del-button" type="button" value="下架" onclick="isHide();"/></div>
 </form>
 </div>
 </body>

@@ -86,4 +86,28 @@ public class ProductController {
 		productService.insertProduct(product);
 		return "redirect:list.do";
 	}
+	
+	/**
+	 * 商品上架
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/isShow.do")
+	public String isShow(Long[] ids) throws Exception {
+		productService.isShow(ids);
+		return "redirect:list.do";
+	}
+	
+	/**
+	 * 批量删除商品
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/deleteBatchProduct.do")
+	public String deleteBatchProduct(Long[] ids) throws Exception {
+		productService.deleteBatchProduct(ids);
+		return "forward:list.do";
+	}
 }

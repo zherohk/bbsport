@@ -27,4 +27,18 @@ public interface ProductService {
 	 * @throws Exception
 	 */
 	public void insertProduct(Product product) throws Exception;
+	
+	/**
+	 * 商品上架
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void isShow(Long[] ids) throws Exception;
+
+	/**
+	 * 批量删除商品
+	 * @param ids
+	 * @throws Exception
+	 */
+	public void deleteBatchProduct(Long[] ids) throws Exception;
 }

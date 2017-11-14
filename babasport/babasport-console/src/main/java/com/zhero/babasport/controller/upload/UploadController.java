@@ -130,6 +130,7 @@ public class UploadController {
 				MultipartFile pic = entry.getValue();
 				//附件上传
 				String path = uploadService.uploadPicToFastDFS(pic.getBytes(), pic.getOriginalFilename());
+				
 				String url = BbsConstans.IMG_URL + path;
 				//响应结果
 				JSONObject jsonObject = new JSONObject();
