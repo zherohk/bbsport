@@ -49,7 +49,7 @@ function trueBuy(){
 			</ul>
 		</div>
 	</div>
-<c:if test="${fn:length(buyerCart.items) != 0}">
+<c:if test="${fn:length(buyerCart.buyerItems) != 0}">
 	<div class="w cart">
 		<div class="cart-hd group">
 			<h2>我的购物车</h2>
@@ -75,7 +75,7 @@ function trueBuy(){
 				</div>
 				<div id="product-list" class="cart-tbody">
 					<!-- ************************商品开始********************* -->
-					<c:forEach items="${buyerCart.items}" var="item">
+					<c:forEach items="${buyerCart.buyerItems}" var="item">
 						<div id="product_11345721" class="item item_selected ">
 							<div class="item_form clearfix">
 								<div class="cell p-checkbox">
@@ -85,7 +85,7 @@ function trueBuy(){
 								<div class="cell p-goods">
 									<div class="p-img">
 										<a href="javascript:;" target="_blank"> <img
-											src="${item.sku.product.images[0]}"
+											src="${item.sku.product.imgUrls[0]}"
 											alt="${item.sku.product.name}" width="52" height="52"></a>
 									</div>
 									<div class="p-name">
@@ -114,7 +114,7 @@ function trueBuy(){
 
 				</div>
 				<!-- product-list结束 -->
-				<div class="cart-toolbar clearfix">
+		 		<div class="cart-toolbar clearfix">
 					<div class="total fr">
 						<p>
 							<span class="totalSkuPrice">¥${buyerCart.productPrice }</span>商品金额：
@@ -156,7 +156,7 @@ function trueBuy(){
 		</form>
 	</div>
 </c:if>
-<c:if test="${fn:length(buyerCart.items) == 0}">
+<c:if test="${fn:length(buyerCart.buyerItems) == 0}">
 <div class="cart" id="container">
 <div class="w" >	
 	<div class="cart-empty">

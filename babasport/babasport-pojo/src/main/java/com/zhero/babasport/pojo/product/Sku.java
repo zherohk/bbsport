@@ -53,7 +53,17 @@ public class Sku implements Serializable {
 
     private Color color;//jsp页面回显
     
-    public Color getColor() {
+    private Product product;//用户购物车页面回显
+    
+    public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Color getColor() {
 		return color;
 	}
 

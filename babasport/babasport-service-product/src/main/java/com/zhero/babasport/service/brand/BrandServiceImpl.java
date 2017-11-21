@@ -10,6 +10,8 @@ import com.zhero.babasport.mapper.product.BrandMapper;
 import com.zhero.babasport.pojo.page.Pagination;
 import com.zhero.babasport.pojo.product.Brand;
 import com.zhero.babasport.pojo.product.BrandQuery;
+
+import redis.clients.jedis.Jedis;
 /**
  * @description 品牌管理的service实现类
  * @author zhero
@@ -20,6 +22,9 @@ public class BrandServiceImpl implements BrandService {
 
 	@Resource
 	private BrandMapper brandMapper;
+	
+	@Resource
+	private Jedis jedis;
 	
 	/*
 	 * (non-Javadoc)
@@ -85,6 +90,8 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	public void updateBrand(Brand brand) throws Exception {
 		brandMapper.updateBrand(brand);
+		//将品牌信息保存到Redis中
+		jedis.hset("brand", String.valueOf(brand.getId()), brand.getName());
 	}
 
 	/*

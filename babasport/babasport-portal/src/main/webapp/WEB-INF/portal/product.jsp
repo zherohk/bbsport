@@ -37,6 +37,60 @@ window.pageConfig = {
 	}
 };
 </script>
+<script type="text/javascript">
+	var cId;
+	
+	var skuId;
+	//选择颜色操作
+	function colorToRed(target,colorId) {
+		cId = colorId;
+		//清除之前信息
+		$("#colors div").removeClass("selected");
+		//框变红
+		$(target).addClass("selected");
+		//加载尺码信息,不同的颜色不同的尺码,尺码动态加载,拼接HTML片段
+		var html = '';
+		<c:forEach items="${skus}" var="sku">
+			if ('${sku.colorId}' == colorId) {//加载该颜色下对应的尺码信息
+				html += '<div class="item" id="${sku.size}" onclick="sizeToRed(this,\'${sku.size}\')">'
+				+'<b></b><a href="javascript:;" title="${sku.size}" >${sku.size}</a>'
+				+'</div>';
+			}
+			$("#sizes").html(html);
+		</c:forEach>
+		$("#sizes div:first").trigger("click");
+	}
+	
+	//选择尺码事件
+	function sizeToRed(target,size) {
+		//清除之前信息
+		$("#sizes div").removeClass("selected");
+		//框变红
+		$(target).addClass("selected");
+		//确定价格
+		<c:forEach items="${skus}" var="sku">
+			if('${sku.size}' == size && '${sku.colorId}' == cId) {
+				$("#bbs-price").html('${sku.price}');
+				skuId = '${sku.id}';
+			}
+		</c:forEach>
+	}
+	
+	$(function(){
+		//默认第一个颜色信息
+		$("#colors div:first").trigger("click");
+		//默认第一个尺码信息
+		$("#sizes div:first").trigger("click");
+	})
+	
+	//加入购物车
+	function addCart() {
+		//购买数量
+		var amount = $("#buy-num").val();
+		//加入购物车请求的url
+		window.location.href = "/shopping/buyerCart?skuId=" + skuId + "&amount=" + amount;
+	}
+</script>
 </head>
 <body>
 <!-- header start -->
@@ -143,9 +197,6 @@ window.pageConfig = {
 			<div id="choose-version" class="li p-choose">
 				<div class="dt">选择尺码：</div>
 				<div class="dd" id="sizes">
-					<div class="item" id="S" onclick="sizeToRed(this,'S')">
-						<b></b><a href="javascript:;" title="S" >S</a>
-					</div>
 				</div>
 			</div>
 				<!--brand-bar-->
@@ -178,8 +229,8 @@ window.pageConfig = {
 			<div id="preview">
 				<div id="spec-n1" class="jqzoom"
 					clstag="shangpin|keycount|product|spec-n1">
-					<img data-img="1" width="350" height="350" src="${product.images[0]}"
-						alt="${product.name}" jqimg="${product.images[0]}" />
+					<img data-img="1" width="350" height="350" src="${product.imgUrls[0]}"
+						alt="${product.name}" jqimg="${product.imgUrls[0]}" />
 				</div>
 
 				<div id="spec-list" clstag="shangpin|keycount|product|spec-n5">
@@ -187,7 +238,7 @@ window.pageConfig = {
 					<a href="javascript:;" class="spec-control" id="spec-backward"></a>
 					<div class="spec-items">
 						<ul class="lh">
-							<c:forEach items="${product.images}" var="pic" varStatus="status">
+							<c:forEach items="${product.imgUrls}" var="pic" varStatus="status">
 								<c:choose>
 									<c:when test="${status.index == 0 }">
 										<li><img data-img="1" class="img-hover"

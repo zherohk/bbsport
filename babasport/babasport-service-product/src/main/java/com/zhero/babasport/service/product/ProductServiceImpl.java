@@ -4,9 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.common.SolrInputDocument;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +22,6 @@ import com.zhero.babasport.pojo.product.Product;
 import com.zhero.babasport.pojo.product.ProductQuery;
 import com.zhero.babasport.pojo.product.ProductQuery.Criteria;
 import com.zhero.babasport.pojo.product.Sku;
-import com.zhero.babasport.pojo.product.SkuQuery;
 import com.zhero.babasport.utils.fdfs.FastDFSUtils;
 
 import redis.clients.jedis.Jedis;
@@ -40,6 +44,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Resource
 	private SolrServer solrServer;
+	
+	@Resource
+	private JmsTemplate jmsTemplate;
 	
 	@Override
 	public Pagination selectProductListByPage(String name, Long brandId, Boolean isShow, Integer pageNo)
@@ -124,27 +131,37 @@ public class ProductServiceImpl implements ProductService {
 		Product product = new Product();
 		product.setIsShow(true);
 		if (null != ids && ids.length > 0) {
-			for (Long id : ids) {
+			for (final Long id : ids) {
 				product.setId(id);
 				productMapper.updateByPrimaryKeySelective(product);
 				//2.保存商品信息到索引库
-				SolrInputDocument solrInputDocument = new SolrInputDocument();
-				Product nPro = productMapper.selectByPrimaryKey(id);
-				solrInputDocument.addField("id", id);//商品id
-				solrInputDocument.addField("name_ik", nPro.getName());//商品名称
-				solrInputDocument.addField("url", nPro.getImgUrl());//商品图片
-				solrInputDocument.addField("brandId", nPro.getBrandId());//商品品牌
-				//商品价格需要展示最低价:select price from bbs_sku where product_id=? order by price asc limit 0,1
-				SkuQuery skuQuery = new SkuQuery();
-				skuQuery.setFields("price");//设置查询的字段
-				skuQuery.createCriteria().andProductIdEqualTo(id);
-				skuQuery.setOrderByClause("price asc");
-				skuQuery.setPageNo(1);
-				skuQuery.setPageSize(1);
-				List<Sku> skus = skuMapper.selectByExample(skuQuery);
-				solrInputDocument.addField("price", skus.get(0).getPrice());
-				solrServer.add(solrInputDocument);
-				solrServer.commit();
+				//将商品的ID发送到消息队列中.
+				jmsTemplate.send(new MessageCreator() {
+					
+					@Override
+					public Message createMessage(Session session) throws JMSException {
+						//将商品的ID封装成消息体进行发送
+						TextMessage msg = session.createTextMessage(String.valueOf(id));
+						return msg;
+					}
+				});
+//				SolrInputDocument solrInputDocument = new SolrInputDocument();
+//				Product nPro = productMapper.selectByPrimaryKey(id);
+//				solrInputDocument.addField("id", id);//商品id
+//				solrInputDocument.addField("name_ik", nPro.getName());//商品名称
+//				solrInputDocument.addField("url", nPro.getImgUrl());//商品图片
+//				solrInputDocument.addField("brandId", nPro.getBrandId());//商品品牌
+//				//商品价格需要展示最低价:select price from bbs_sku where product_id=? order by price asc limit 0,1
+//				SkuQuery skuQuery = new SkuQuery();
+//				skuQuery.setFields("price");//设置查询的字段
+//				skuQuery.createCriteria().andProductIdEqualTo(id);
+//				skuQuery.setOrderByClause("price asc");
+//				skuQuery.setPageNo(1);
+//				skuQuery.setPageSize(1);
+//				List<Sku> skus = skuMapper.selectByExample(skuQuery);
+//				solrInputDocument.addField("price", skus.get(0).getPrice());
+//				solrServer.add(solrInputDocument);
+//				solrServer.commit();
 			}
 		}
 	}

@@ -10,7 +10,38 @@
 <link rel="stylesheet" type="text/css" href="/css/base.css" media="all" />
 <link type="text/css" rel="stylesheet" href="/css/search.css">
 <script type="text/javascript" src="/js/jquery-1.6.4.js"></script>
-
+<script type="text/javascript">
+	var price = '${price}';
+	var keyword = '${keyword}';
+	var brandId = '${brandId}';
+	//选择品牌事件
+	function fqBrand(id){
+		//判断是否已选价格
+		if (price != null && price != '') {//已选
+			window.location.href = "/Search?keyword=" + keyword + "&brandId=" + id + "&price=" + price;
+		} else {
+			window.location.href = "/Search?keyword=" + keyword + "&brandId=" + id;
+		}
+	}
+	//选择价格时间
+	function fqPrice(pri){
+		//判断是否已选品牌
+		if (brandId != null && brandId != '') {//已选
+			window.location.href = "/Search?keyword=" + keyword + "&brandId=" + brandId + "&price=" + pri;
+		} else {
+			window.location.href = "/Search?keyword=" + keyword + "&price=" + pri;
+		}
+	}
+	
+	function fqRem(key) {
+		//判断取消的是品牌还是价格
+		if (key == '品牌: ') {
+			window.location.href = "/Search?keyword=" + keyword + "&price=" + price;
+		} else if (key == '价格: ') {
+			window.location.href = "/Search?keyword=" + keyword + "&brandId=" + brandId;
+		}
+	}
+</script>
 </head>
 <body>
 <!-- header start -->
@@ -40,14 +71,14 @@
 			</div>
 			<i class="crumbs-arrow">&gt;</i>
 			<div class="crumbs-nav-item">
-				<strong class="search-key">"瑜伽服"</strong>
+				<strong class="search-key">${keyword }</strong>
 			</div>
 			<c:if test="${fn:length(map) != 0 }">
 			<div class="sl-b-selected J_brandSelected">
 				<span class="crumbs-arrow">已选条件：</span>
 					<c:forEach items="${map }" var="m">
-						<a title="依琦莲（yiqilian）"  href="javascript:;" class="crumb-select-item">
-							<b>${m.key }：</b><em>${m.value }</em><i></i>
+						<a title="${m.value }"  href="javascript:;" class="crumb-select-item">
+							<b>${m.key }：</b><em>${m.value }</em><i onclick="fqRem('${m.key}');"></i>
 						</a>
 					</c:forEach>
 			</div>
@@ -262,7 +293,7 @@
 					</div>
 				</div>
 				<div class="p-name p-name-type-2">
-					<a target="_blank" title="满129立减10,199减20优惠券,支持货到付款" href="javascript:;" onclick="">
+					<a title="满129立减10,199减20优惠券,支持货到付款" href="javascript:;" onclick="window.open('http://localhost:8084/html/product/${product.id}.html')">
 						<em>${product.name }</em>
 					</a>
 				</div>

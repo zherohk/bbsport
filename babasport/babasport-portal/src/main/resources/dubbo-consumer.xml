@@ -31,6 +31,12 @@
 	<!-- 引用注册中心的服务 -->
 	<dubbo:reference id="searchService" interface="com.zhero.babasport.service.search.SearchService"
 					url="dubbo://127.0.0.1:20881"/>
+	<dubbo:reference id="cmsService" interface="com.zhero.babasport.service.cms.CmsService"
+					url="dubbo://127.0.0.1:20882"/>
+	<dubbo:reference id="buyerService" interface="com.zhero.babasport.service.buyer.BuyerService"
+					url="dubbo://127.0.0.1:20883"/>
+	<dubbo:reference id="sessionProvider" interface="com.zhero.babasport.service.sessionprovider.SessionProvider"
+					url="dubbo://127.0.0.1:20883"/>
 	
 	<!-- 全局超时时间设置 -->
 	<dubbo:consumer timeout="6000000"/>
